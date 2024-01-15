@@ -13,7 +13,7 @@
     />
     {{-- ---alpine-js --}}
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/app.css" />
     {{-- --tailwind--- --}}
         @vite('resources/css/app.css')
     <title>Blog</title>
@@ -31,5 +31,7 @@
     </main>
     {{-- ----footer--- --}}
     @include("partials._footer")
+
+    <script src="resources/js/app.js"></script>
   </body>
 </html>>

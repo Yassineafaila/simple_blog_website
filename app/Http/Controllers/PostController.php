@@ -48,6 +48,7 @@ class PostController extends Controller
             "content" => "required",
             "cover" => ["required", "image"]
         ]);
+        $formFields["categories"]=implode(",",$request->categories);
         if ($request->hasFile("cover")) {
 
             $formFields["cover"] = $request->file("cover")->store("covers", "public");

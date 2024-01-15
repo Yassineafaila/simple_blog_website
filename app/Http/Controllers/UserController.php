@@ -22,8 +22,11 @@ class UserController extends Controller
             "password" => "required|confirmed|min:8"
         ]);
 
+        //create avatar 
+        $formFields["avatar"]= 
         // Hash Password
         $formFields["password"] = bcrypt($formFields["password"]);
+
 
         // Create User
         $user = User::create($formFields);
