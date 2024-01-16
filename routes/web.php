@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,9 @@ Route::delete("/posts/{post}", [PostController::class, "delete"])->middleware("a
 
 // Show Single Post
 Route::get("/posts/{post}", [PostController::class, "show"]);
+
+//Comment On A Single Post
+Route::post("/posts/{post}/comment",[CommentController::class,"store"])->middleware("auth");
 
 //Show Register Form
 Route::get('/users/register', [UserController::class, "register"])->middleware("guest");
