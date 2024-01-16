@@ -44,21 +44,31 @@
                         </button>
                     </form>
                 @else
-                    <div class="d-flex flex-col">
+                    <div class="d-flex flex-col w-96">
                         <div>
-                            <button type="button" class="me-2 font-bold hover:text-buttonBg">comment <i
+                            <button type="button" class="me-2 btnComment font-bold hover:text-buttonBg">comment <i
                                     class="fa-solid fa-comment"></i></button>
                             <button type="button" class="ms-2 font-bold  hover:text-buttonBg">Share <i
                                     class="fa-solid fa-share"></i></button>
                         </div>
-                    <div id="containerComment">
-                    <textarea class="border border-gray-200 rounded p-2 w-full hidden" name="comment" value="{{ old('comment') }}"
-                        rows="10" id="inputComment" placeholder="Include tasks, requirements, salary, etc"></textarea>
-            </div>
+                        <form method="post" action="/posts/{{ $post->id }}/comment">
+                            @csrf
+                            <input class="border mt-2 border-gray-200 rounded  p-2 w-full hidden" name="comment"
+                                value="{{ old('comment') }}" id="inputComment" placeholder="Enter The Comment Here"></input>
+                            <button type="submit"
+                                class="hidden buttonSubmitComment bg-buttonBg px-4 mt-2 rounded-md text-white font-medium py-2">Add
+                                Comment</button>
+                        </form>
+                    </div>
+                @endif
+            @endauth
         </div>
-        @endif
-    @endauth
     </div>
     </div>
-    </div>
+    <script>
+        $(".btnComment").on("click", function() {
+            $("#inputComment").css("display", "block")
+            $(".buttonSubmitComment").css("display", "block")
+        })
+    </script>
 @endsection
