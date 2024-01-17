@@ -22,8 +22,6 @@ class UserController extends Controller
             "password" => "required|confirmed|min:8"
         ]);
 
-        //create avatar 
-        $formFields["avatar"]= 
         // Hash Password
         $formFields["password"] = bcrypt($formFields["password"]);
 
@@ -33,7 +31,7 @@ class UserController extends Controller
 
         //Login
         auth()->login($user);
-        
+
         return redirect('/')->with("message", "User created and logged in");
     }
     //Show Login Form
