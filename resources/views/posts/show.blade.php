@@ -44,31 +44,119 @@
                         </button>
                     </form>
                 @else
-                    <div class="d-flex flex-col w-96">
-                        <div>
+                    <div class="flex flex-col w-96">
+                        <div class="flex items-center w-full">
                             <button type="button" class="me-2 btnComment font-bold hover:text-buttonBg">comment <i
-                                    class="fa-solid fa-comment"></i></button>
+                                    class="fa-regular fa-comment"></i></button>
+                            <form class="mb-0 me-3" method="post" action="/posts/{{ $post->id }}/save">
+                                @csrf
+                                <button type="submit" class="ms-2 font-bold hover:text-buttonBg">Save
+                                    @if (auth()->user()->saves()->where('post_id', $post->id)->first())
+                                        <i class="fa-solid fa-bookmark text-red-500"></i>
+                                    @else
+                                        <i class="fa-regular fa-bookmark"></i>
+                                    @endif
+                                </button>
+                            </form>
                             <button type="button" class="ms-2 font-bold  hover:text-buttonBg">Share <i
                                     class="fa-solid fa-share"></i></button>
+
                         </div>
                         <form method="post" action="/posts/{{ $post->id }}/comment">
-                            @csrf
-                            <input class="border mt-2 border-gray-200 rounded  p-2 w-full hidden" name="comment"
-                                value="{{ old('comment') }}" id="inputComment" placeholder="Enter The Comment Here"></input>
-                            <button type="submit"
-                                class="hidden buttonSubmitComment bg-buttonBg px-4 mt-2 rounded-md text-white font-medium py-2">Add
-                                Comment</button>
+                            <div class="comment_area hidden">
+                                @csrf
+                                <textarea rows="7" class="border mt-2 border-gray-200 rounded  p-2 w-full " name="comment"
+                                    value="{{ old('comment') }}" placeholder="Enter The Comment Here"></textarea>
+                                <button type="submit" class=" bg-buttonBg px-4 mt-2 rounded-md text-white font-semibold py-2">
+                                    Submit</button>
+                            </div>
                         </form>
+
                     </div>
-                @endif
-            @endauth
+
+            </div>
+            @endif
+        @endauth
+        <div class="comments flex gap-6 flex-col mt-4 w-96">
+            @foreach ($comments as $comment)
+                <div class="flex flex-col gap-2 w-full ">
+                    <div class="border border-gray-400 px-3 py-4 rounded ">
+                        <div class="flex gap-1 items-center">
+                            <img src="{{ $comment->user->avatar ? asset('storage/' . $comment->user->avatar) : asset('/images/no-image.jpg') }}"
+                                alt="{{ $comment->user->name }}" class="w-10 h-10 rounded-full" />
+                            <p>{{ $comment->user->name }}</p> |
+                            @php
+                                $date = date_format($comment->created_at, 'M,d Y');
+                            @endphp
+                            <p>{{ $date }}</p>
+                        </div>
+                        <p class="mt-3.5">{{ $comment->comment }}</p>
+                    </div>
+                    <div class="flex  gap-3 flex-col">
+                        @auth
+                            <form method="post" action="/posts/{{ $post->id }}/{{ $comment->id }}/like">
+                                @csrf
+                                <div class="flex items-center gap-2">
+                                    <button type="submit">
+                                        @if ($comment->likes->count())
+                                            <i class="fa-solid fa-heart text-red-500"></i>
+                                        @else
+                                            <i class="fa-regular fa-heart "></i>
+                                        @endif
+
+                                        like {{ $comment->likes->count() }}
+                                    </button>
+                            </form>
+                            <button class="btnReply" type="button" id="{{ $comment->id }}"> <i
+                                    class="fa-regular fa-comment-dots"></i>
+                                Reply</button>
+                        </div>
+
+                        <form method="post" action="/posts/{{ $post->id }}/{{ $comment->id }}/reply"
+                            class="reply_area_{{ $comment->id }} hidden" id="{{ $comment->id }}">
+                            @csrf
+                            <textarea rows="3" class="border mt-2 border-gray-200 rounded  p-2 w-full " name="reply"
+                                value="{{ old('reply') }}"placeholder="Enter The replay Here"></textarea>
+                            <div>
+                                <button type="submit"
+                                    class="  bg-buttonBg px-3 mt-2 rounded-md text-white font-semibold py-1.5">
+                                    Submit</button>
+                                <button type="button"
+                                    class="bg-gray-200 text-black font-semibold px-4 roudned-md py-2 hidden cancelReply">Cancel</button>
+                            </div>
+                        </form>
+                        <div class="replies_area_{{ $comment->id }} hidden ms-5">
+                            @foreach ($comment->replies as $reply)
+                                <div class="border border-gray-400 px-3 py-4 rounded mb-2  ">
+                                    <div class="flex gap-1 items-center ">
+                                        <img src="{{ $reply->user->avatar ? asset('storage/' . $reply->user->avatar) : asset('/images/no-image.jpg') }}"
+                                            alt="{{ $reply->user->name }}" class="w-10 h-10 rounded-full" />
+                                        <p>{{ $reply->user->name }}</p> |
+                                        @php
+                                            $date = date_format($reply->created_at, 'M,d Y');
+                                        @endphp
+                                        <p>{{ $date }}</p>
+                                    </div>
+                                    <p class="mt-3.5">{{ $reply->content }}</p>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endauth
+
+                </div>
         </div>
+        @endforeach
+    </div>
     </div>
     </div>
     <script>
         $(".btnComment").on("click", function() {
-            $("#inputComment").css("display", "block")
-            $(".buttonSubmitComment").css("display", "block")
+            $(".comment_area").toggleClass("hidden")
+        })
+        $(".btnReply").on("click", function(e) {
+            $(`.replies_area_${$(this).attr("id")}`).toggleClass("hidden");
+            $(`.reply_area_${$(this).attr("id")}`).toggleClass("hidden");
+
         })
     </script>
 @endsection
