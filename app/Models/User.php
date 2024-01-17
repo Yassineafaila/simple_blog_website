@@ -48,4 +48,20 @@ class User extends Authenticatable
     public function posts(){
         return $this->hasMany(Post::class,"user_id");
     }
+
+    //Relationship with comments
+    public function comments(){
+        return $this->hasMany(Comment::class,"user_id");
+    }
+
+    //Relationship with replies
+    public function replies(){
+        return $this->hasMany(Reply::class,"user_id");
+    }
+
+    //Relationship with savedPosts
+    public function saves(){
+        return $this->hasMany(Save::class,"user_id");
+    }
+
 }
