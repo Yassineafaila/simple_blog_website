@@ -6,11 +6,13 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
     //Show All Posts
-    public function index(Request $request){
+    public function index(Request $request)
+    {
 
         return view(
             "posts.index",
@@ -29,7 +31,9 @@ class PostController extends Controller
     //Show Single Post
     public function show(Post $post)
     {
-        return view("posts.show", ["post" => $post]);
+        //This Line Grabs All The Comments Of This Post
+        $comment = Post::find($post->id)->comments;
+        return view("posts.show", ["post" => $post, "comments" => $comment]);
     }
 
     //Show Create Page Post
@@ -48,9 +52,11 @@ class PostController extends Controller
             "content" => "required",
             "cover" => ["required", "image"]
         ]);
-        $formFields["categories"]=implode(",",$request->categories);
+        $formFields["categories"] = implode(",", $request->categories);
         if ($request->hasFile("cover")) {
-
+            $file = $request->file("cover");
+            $name = $file->hashName(); // generate a unique or random name
+            $extension = $file->extension(); // Determine the file's extension based on the file's MIME type...
             $formFields["cover"] = $request->file("cover")->store("covers", "public");
         }
         // Retrieve the currently authenticated user...
@@ -90,6 +96,7 @@ class PostController extends Controller
     {
         $currentUser = auth()->user()->id;
         if ($currentUser === $post->user_id) {
+            Storage::disk('public')->delete("{{$post->cover}}");
             $post->delete();
             return redirect('/')->with("message", "The Post deleted successfully. ");
         }
