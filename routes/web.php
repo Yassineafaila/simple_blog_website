@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ReplyController;
+use App\Http\Controllers\SaveController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +44,16 @@ Route::get("/posts/{post}", [PostController::class, "show"]);
 
 //Comment On A Single Post
 Route::post("/posts/{post}/comment",[CommentController::class,"store"])->middleware("auth");
+
+//Replay On A Single Comment
+Route::post("/posts/{post}/{comment}/reply",[ReplyController::class,"store"])->middleware("auth");
+
+
+//Like The Single Comment
+Route::post("/posts/{post}/{comment}/like", [LikeController::class, "liked"])->middleware("auth");
+
+//Save The post
+Route::post("/posts/{post}/save",[SaveController::class,"savePost"])->middleware("auth");
 
 //Show Register Form
 Route::get('/users/register', [UserController::class, "register"])->middleware("guest");
