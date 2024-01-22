@@ -17,7 +17,7 @@
                 <div class="flex items-center">
                   <img
                     alt="authProfile"
-                    src="{{asset('images/no-image.jpg')}}"
+                    src="{{ $post->user->avatar ? asset('storage/' . $post->user->avatar) : asset('/images/no-image.jpg') }}"
                     class="w-10 rounded-full h-10"
                   />
                   <span class="ms-4 font-bold">{{$post->user->name}}</span>

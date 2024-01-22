@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class SaveController extends Controller
 {
-    //
     //Saved the post
     public function savePost(Post $post)
     {
@@ -26,5 +25,15 @@ class SaveController extends Controller
             auth()->user()->saves()->create(['post_id' => $post->id]);
             return redirect()->back()->with("message", "Post saved successfully");
         }
+    }
+
+
+    //Show All the Saved Post
+    public function savedPosts()
+    {
+
+        // Get All the posts for the  current authenticated user
+        $posts = auth()->user()->saves()->get();
+        return view("posts.saves", ["posts" => $posts]);
     }
 }

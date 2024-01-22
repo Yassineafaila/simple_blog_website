@@ -32,32 +32,44 @@ Route::post("/posts", [PostController::class, "store"])->middleware("auth");
 Route::get("/posts/{post}/edit", [PostController::class, "edit"])->middleware("auth");
 
 // Show My Posts
-Route::get("/posts/myposts",[PostController::class,"ShowMyPosts"]);
+Route::get("/posts/myposts", [PostController::class, "ShowMyPosts"]);
+
 // Update the post
 Route::put("/posts/{post}", [PostController::class, "update"])->middleware("auth");
 
 // Delete the post
 Route::delete("/posts/{post}", [PostController::class, "delete"])->middleware("auth");
 
-// Show Single Post
-Route::get("/posts/{post}", [PostController::class, "show"]);
 
 //Comment On A Single Post
-Route::post("/posts/{post}/comment",[CommentController::class,"store"])->middleware("auth");
+Route::post("/posts/{post}/comment", [CommentController::class, "store"])->middleware("auth");
 
 //Replay On A Single Comment
-Route::post("/posts/{post}/{comment}/reply",[ReplyController::class,"store"])->middleware("auth");
+Route::post("/posts/{post}/{comment}/reply", [ReplyController::class, "store"])->middleware("auth");
 
 
 //Like The Single Comment
 Route::post("/posts/{post}/{comment}/like", [LikeController::class, "liked"])->middleware("auth");
 
+
 //Save The post
-Route::post("/posts/{post}/save",[SaveController::class,"savePost"])->middleware("auth");
+Route::post("/posts/{post}/save", [SaveController::class, "savePost"])->middleware("auth");
+
+//Show All Saved Post
+Route::get("/posts/saves", [SaveController::class, "savedPosts"])->middleware("auth");
 
 //Show Register Form
 Route::get('/users/register', [UserController::class, "register"])->middleware("guest");
 
+//Get The Data For The User
+Route::get("/users/{user}", [UserController::class, "getInfo"])->middleware("auth");
+
+// Show Single Post
+Route::get("/posts/{post}", [PostController::class, "show"]);
+
+
+//Show the Settings Page :
+Route::get("/settings", [UserController::class, "showSettings"])->middleware("auth");
 // Register the user
 Route::post("/users", [UserController::class, "store"]);
 
@@ -69,3 +81,10 @@ Route::get("/login", [UserController::class, "login"])->name("login")->middlewar
 
 //Login User
 Route::post('/users/auth', [UserController::class, "authenticate"]);
+
+// Route for updating regular data
+Route::put('/users/{user}/update', [UserController::class, 'updateRegularData'])->middleware('auth');
+
+// Route for updating password
+Route::put('/users/{user}/update-password', [UserController::class, 'updatePassword'])->middleware('auth');
+

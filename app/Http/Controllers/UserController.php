@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -64,5 +65,51 @@ class UserController extends Controller
         }
 
         return back()->withErrors(["email" => "Invalid Credentials"]);
+    }
+
+    //Get The Basic Info
+    public function getInfo($username)
+    {
+
+        // Find the user by name
+        $user = User::where('name', $username)->first();
+
+        if (!$user) {
+            abort(404); // User not found, return a 404 response
+        }
+        return view("auth.info", compact("user"));
+    }
+
+    //Show The Settings Page :
+    public function showSettings()
+    {
+
+        $user = Auth::user();
+        return view("auth.editProfile", ["user" => $user]);
+    }
+
+    // Update regular data
+    public function updateRegularData(Request $request, User $user)
+    {
+        $formFields = $request->validate([
+            "name" => ["required", "min:3"],
+            "email" => ["required", "email"],
+            "bio" => [""],
+            "location" => [""]
+        ]);
+        if ($request->hasFile("avatar")) {
+            $formFields["avatar"] = $request->file("avatar")->store("avatars", "public");
+        }
+        $user->update($formFields);
+        return redirect()->back()->with('success', 'Regular data updated successfully');
+    }
+
+    // Update password
+    public function updatePassword(Request $request, User $user)
+    {
+        // Your logic to update password goes here
+        // ...
+
+        return redirect()->back()->with('success', 'Password updated successfully');
     }
 }

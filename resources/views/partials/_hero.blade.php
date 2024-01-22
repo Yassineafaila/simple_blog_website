@@ -10,9 +10,13 @@
              noise.
          </p>
          <div>
-             <a href="/auth/register"
-                 class="inline-block border-2 border-white bg-buttonBg font-bold text-white border-none py-2 px-4 rounded-xl uppercase mt-2 hover:text-black hover:border-black">Sign
-                 Up</a>
+             @if (auth()->user()->name ?? false)
+                 <div></div>
+             @else
+                 <a href="/users/register"
+                     class="inline-block border-2 border-white bg-buttonBg font-bold text-white border-none py-2 px-4 rounded-xl uppercase mt-2 hover:text-black hover:border-black">Sign
+                     Up</a>
+             @endif
          </div>
      </div>
  </section>

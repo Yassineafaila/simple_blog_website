@@ -8,8 +8,9 @@
                 <img class="w-full md:block h-1/3"
                     src="{{ $post->cover ? asset('storage/' . $post->cover) : asset('/images/post.png') }}" alt="" />
                 <div class="flex items-center relative mt-4">
-                    <img alt="authProfile" src="{{ asset('images/no-image.jpg') }}"
-                        class="absolute -top-10 left-14 w-10 rounded-full h-10" />
+                    <a href="/users/{{$post->user->name}}"><img alt="authProfile" src="{{ $post->user->avatar ? asset('storage/' . $post->user->avatar) : asset('/images/no-image.jpg') }}"
+                            class="absolute -top-10 left-14 w-10 rounded-full h-10" />
+                        </a>
                     <span class="ms-4 mt-4 font-bold">{{ $post->user->name }}</span>
                 </div>
                 <h3 class="text-xl md:text-2xl mb-3 font-bold mt-4">

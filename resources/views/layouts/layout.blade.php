@@ -20,7 +20,7 @@
     <title>Blog</title>
 </head>
 
-<body class="mb-48">
+<body class="">
     @if (session()->has('message'))
         <x-flash-message>
             <p>{{ session('message') }}</p>

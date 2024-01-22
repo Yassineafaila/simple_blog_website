@@ -6,3 +6,40 @@
 body {
     font-family: "Rubik", sans-serif;
 }
+nav ul li .subMenu {
+    display: none;
+}
+nav ul li .subMenu.show {
+    position: absolute;
+    z-index: 99999;
+    display: flex;
+}
+main {
+    background-color: #eee;
+    min-height: calc(100vh - 108px) !important;
+}
+.tab.active {
+   background-color: #ef3b2d;
+    color: #ffff;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+
+}
+@media screen and (min-width: 768px) {
+    .profile_page .profile_pic  {
+        top: -70px;
+        left: 50%;
+        transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        -o-transform: translateX(-50%);
+        border: 3px solid red;
+    }
+}

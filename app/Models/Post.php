@@ -30,4 +30,10 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class, "post_id");
     }
+
+    //Relationship to saved posts
+    public function savedPosts()
+    {
+        return $this->hasMany(Save::class,"post_id");
+    }
 }
