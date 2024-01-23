@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -94,22 +95,30 @@ class UserController extends Controller
         $formFields = $request->validate([
             "name" => ["required", "min:3"],
             "email" => ["required", "email"],
-            "bio" => [""],
-            "location" => [""]
+            "bio" => ["nullable"],
+            "location" => ["nullable"]
         ]);
         if ($request->hasFile("avatar")) {
             $formFields["avatar"] = $request->file("avatar")->store("avatars", "public");
         }
+
         $user->update($formFields);
-        return redirect()->back()->with('success', 'Regular data updated successfully');
+        return redirect()->back()->with('message', 'Regular data updated successfully');
     }
 
     // Update password
     public function updatePassword(Request $request, User $user)
     {
-        // Your logic to update password goes here
-        // ...
+        $formFields=$request->validate([
+            "current_password"=>["required"],
+            "password"=>["required","min:8"]
+        ]);
+       if(Hash::check($request->current_password,$user->password)){
+            // Hash Password
+            $formFields["password"] = bcrypt($formFields["password"]);
+       }
+       $user->update($formFields);
 
-        return redirect()->back()->with('success', 'Password updated successfully');
+        return redirect()->back()->with('message', 'Password updated successfully');
     }
 }

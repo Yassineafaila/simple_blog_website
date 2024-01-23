@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'avatar',
+        'bio',
+        'location',
         'password',
     ];
 
@@ -45,23 +47,26 @@ class User extends Authenticatable
     ];
 
     // Relationship with posts
-    public function posts(){
-        return $this->hasMany(Post::class,"user_id");
+    public function posts()
+    {
+        return $this->hasMany(Post::class, "user_id");
     }
 
     //Relationship with comments
-    public function comments(){
-        return $this->hasMany(Comment::class,"user_id");
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, "user_id");
     }
 
     //Relationship with replies
-    public function replies(){
-        return $this->hasMany(Reply::class,"user_id");
+    public function replies()
+    {
+        return $this->hasMany(Reply::class, "user_id");
     }
 
     //Relationship with savedPosts
-    public function saves(){
-        return $this->hasMany(Save::class,"user_id");
+    public function saves()
+    {
+        return $this->hasMany(Save::class, "user_id");
     }
-
 }

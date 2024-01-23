@@ -1,6 +1,8 @@
 @extends('layouts.layout');
 @section('content')
-    <a href="/" class="inline-block text-black ml-4 mb-4"><i class="fa-solid fa-arrow-left"></i> Back
+    <div class="container mx-auto">
+        <a href="/" class="inline-block text-black ml-4 mb-4 text-base md:text-xl mt-4 font-bold"><i
+            class="fa-solid fa-arrow-left text-red-500"></i> Back
     </a>
     <div class="mx-4">
         <div class="rounded">
@@ -8,9 +10,10 @@
                 <img class="w-full md:block h-1/3"
                     src="{{ $post->cover ? asset('storage/' . $post->cover) : asset('/images/post.png') }}" alt="" />
                 <div class="flex items-center relative mt-4">
-                    <a href="/users/{{$post->user->name}}"><img alt="authProfile" src="{{ $post->user->avatar ? asset('storage/' . $post->user->avatar) : asset('/images/no-image.jpg') }}"
+                    <a href="/users/{{ $post->user->name }}"><img alt="authProfile"
+                            src="{{ $post->user->avatar ? asset('storage/' . $post->user->avatar) : asset('/images/no-image.jpg') }}"
                             class="absolute -top-10 left-14 w-10 rounded-full h-10" />
-                        </a>
+                    </a>
                     <span class="ms-4 mt-4 font-bold">{{ $post->user->name }}</span>
                 </div>
                 <h3 class="text-xl md:text-2xl mb-3 font-bold mt-4">
@@ -147,6 +150,7 @@
                 </div>
         </div>
         @endforeach
+    </div>
     </div>
     </div>
     </div>

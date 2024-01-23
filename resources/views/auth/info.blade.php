@@ -64,7 +64,7 @@
                             <div class="flex items-center mb-2">
                                 <div class="me-4">
                                     <a href="/users/{{ $post->user->name }}"><img alt="authProfile"
-                                            src="{{ asset('images/no-image.jpg') }}" class=" w-8 rounded-full h-8" /></a>
+                                            src="{{ $post->user->avatar ? asset('storage/' . $post->user->avatar) : asset('/images/no-image.jpg') }}"class=" w-8 rounded-full h-8" /></a>
                                 </div>
                                 <div>
                                     <p class="text-sm">{{ $post->user->name }}</p>

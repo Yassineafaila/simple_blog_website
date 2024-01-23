@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 @section('content')
     <div class="mx-4">
-        <div class="bg-gray-50 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24">
+        <div class="bg-gray-50 border border-gray-200 p-10 rounded max-w-lg mx-auto ">
             <header class="text-center">
                 <h2 class="text-2xl font-bold uppercase mb-1">Register</h2>
                 <p class="mb-4">Create an account to post</p>
@@ -59,7 +59,7 @@
                 <div class="mt-8">
                     <p>
                         Already have an account?
-                        <a href="/auth/login" class="text-buttonBg">Login</a>
+                        <a href="/login" class="text-buttonBg">Login</a>
                     </p>
                 </div>
             </form>

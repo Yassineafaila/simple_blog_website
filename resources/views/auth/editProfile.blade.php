@@ -58,7 +58,7 @@
                         <div>
                             <label class="text-base font-bold">Location</label>
                             <input class="block border border-gray-200 rounded p-2 w-96 mt-2" type="text"
-                                placeholder="Morocco,casablanca" name="location" />
+                                placeholder="Morocco,casablanca" name="location" value="{{$user->location ? $user->location : null}}" />
                             @error('location')
                                 <p class="text-sm text-red-500">{{ $message }}</p>
                             @enderror
@@ -66,7 +66,7 @@
                         <div>
                             <label class="text-base font-bold">Bio</label>
                             <input class="block border border-gray-200 rounded p-2 w-96 mt-2" type="text"
-                                placeholder="A short Bio" name="bio" />
+                                placeholder="A short Bio" name="bio" value="{{$user->bio ? $user->bio : null}}" />
                             @error('bio')
                                 <p class="text-sm text-red-500">{{ $message }}</p>
                             @enderror

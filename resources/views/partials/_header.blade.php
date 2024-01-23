@@ -1,7 +1,7 @@
-<nav class="flex justify-between items-center mb-4 mt-4 py-4 px-4 md:px-0 lg:container mx-auto relative">
+<nav class="flex justify-between items-center mb-2 mt-4 py-3.5 px-4 md:px-0 lg:container mx-auto relative">
     <div class="flex items-center">
         <a href="/"
-            class="font-bold text-base sm:text-2xl bg-black py-1.5 px-2.5 rounded-md text-white">PureInsight</a>
+            class="font-bold text-base sm:text-2xl bg-buttonBg py-1.5 px-2.5 rounded-md text-white">PureInsight</a>
         <form action="/" class="hidden md:flex md:w-96 ">
             <div class="relative border-2 border-gray-100 m-4 rounded-lg flex items-center">
 
@@ -29,7 +29,7 @@
                 </button>
 
                 <ul
-                    class=" subMenu p-1  top-24 flex-col sm:w-60 left-0 sm:left-3/4 sm:top-20  container rounded-md bg-white border border-gray-300">
+                    class=" subMenu p-1  top-24 flex-col sm:w-60   sm:top-20  container rounded-md bg-white border border-gray-300">
                     <li class="border-b   border-gray-300 py-3  "><a href="/users/{{ auth()->user()->name }}"
                             class="block py-1.5 text-base hover:bg-red-200 hover:text-red-600 hover:underline rounded-md px-6">{{ auth()->user()->name }}</a>
                     </li>

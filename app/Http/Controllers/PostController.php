@@ -18,7 +18,7 @@ class PostController extends Controller
             "posts.index",
             [
                 "heading" => "Latest posts",
-                "posts" => Post::latest()->filter(request(["category", "search"]))->paginate(5)
+                "posts" => Post::latest()->filter(request(["category", "search"]))->paginate(3)
             ]
         );
     }
@@ -47,9 +47,9 @@ class PostController extends Controller
     {
         $formFields = $request->validate([
             "title" => "required",
-            "description" => "required",
+            "description" => "required|min:50",
             "categories" => "required",
-            "content" => "required",
+            "content" => "required|100",
             "cover" => ["required", "image"]
         ]);
         $formFields["categories"] = implode(",", $request->categories);

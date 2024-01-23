@@ -1,10 +1,10 @@
 @extends('layouts.layout')
 @section('content')
     <div class="mx-4">
-        <div class="bg-gray-50 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24">
+        <div class="bg-gray-50 border border-gray-200 p-10 rounded max-w-lg mx-auto">
             <header class="text-center">
                 <h2 class="text-2xl font-bold uppercase mb-1">Log In</h2>
-                <p class="mb-4">Log in to post</p>
+                <p class="mb-4">Log in to post something</p>
             </header>
 
             <form action="/users/auth" method="POST">
@@ -13,7 +13,7 @@
                     <label for="email" class="inline-block text-lg mb-2">Email</label>
                     <input type="email" class="border border-gray-200 rounded p-2 w-full" name="email" />
                     @error('email')
-                        <p class="text-red-500 text-xs mt-1"></p>
+                        <p class="text-red-500 text-xs mt-1">{{$message}}</p>
                     @enderror
                 </div>
 
@@ -23,7 +23,7 @@
                     </label>
                     <input type="password" class="border border-gray-200 rounded p-2 w-full" name="password" />
                     @error('password')
-                        <p class="text-red-500 text-xs mt-1"></p>
+                        <p class="text-red-500 text-xs mt-1">{{$message}}</p>
                     @enderror
                 </div>
 
