@@ -1,4 +1,4 @@
-<nav class="flex justify-between items-center mb-2 mt-4 py-3.5 px-4 md:px-0 lg:container mx-auto relative">
+<nav class="flex justify-between items-center mb-4 mt-4 py-3.5 px-4 md:px-0 lg:container mx-auto relative">
     <div class="flex items-center">
         <a href="/"
             class="font-bold text-base sm:text-2xl bg-buttonBg py-1.5 px-2.5 rounded-md text-white">PureInsight</a>

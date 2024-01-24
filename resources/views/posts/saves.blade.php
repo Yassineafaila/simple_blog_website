@@ -1,10 +1,8 @@
 @extends('layouts.layout')
 @section('content')
     @unless (count($posts) === 0)
-        <div class="container mx-auto">
-           <div class="container mx-auto">
-             <h1 class="text-xl md:text-2xl font-bold mt-4 mb-4">Archived Posts ({{count($posts)}})</h1>
-           </div>
+        <div class="container mx-auto mt-4 py-4">
+           <div class="container px-4 py-4 mb-4"><h1 class="border-l-4 border-red-500 px-4 font-bold text-xl md:text-2xl">Archived Posts ({{count($posts)}})</h1></div>
             <x-container>
             @foreach ($posts as $post)
                 <div>

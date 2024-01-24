@@ -87,4 +87,3 @@ Route::put('/users/{user}/update', [UserController::class, 'updateRegularData'])
 
 // Route for updating password
 Route::put('/users/{user}/update-password', [UserController::class, 'updatePassword'])->middleware('auth');
-

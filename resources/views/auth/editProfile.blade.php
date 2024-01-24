@@ -24,7 +24,7 @@
                         <h4 class="font-bold text-base md:text-2xl">User</h4>
                         <div>
                             <label class="text-base font-bold">Name</label>
-                            <input class="block border border-gray-200 rounded p-2 w-96 mt-2" type="text"
+                            <input class="block border focus:outline-red-500 border-gray-200 rounded p-2 w-96 mt-2" type="text"
                                 placeholder="Name" name="name" value="{{ $user->name }}" />
                             @error('name')
                                 <p class="text-sm text-red-500">{{ $message }}</p>
@@ -32,7 +32,7 @@
                         </div>
                         <div>
                             <label class="text-base font-bold">Email</label>
-                            <input class="block border border-gray-200 rounded p-2 w-96 mt-2" type="email"
+                            <input class="block border focus:outline-red-500 border-gray-200 rounded p-2 w-96 mt-2" type="email"
                                 placeholder="Name" name="email" value="{{ $user->email }}" />
                             @error('email')
                                 <p class="text-sm text-red-500">{{ $message }}</p>
@@ -44,7 +44,7 @@
                                 <img alt="authProfile"
                                     src="{{ $user->avatar ? asset('storage/' . $user->avatar) : asset('/images/no-image.jpg') }}"
                                     class="w-10 rounded-full h-10" />
-                                <input class="block border border-gray-200 rounded p-2 w-96 mt-2" type="file"
+                                <input class="block border focus:outline-red-500 border-gray-200 rounded p-2 w-96 mt-2" type="file"
                                     name="avatar" />
 
                             </div>
@@ -57,7 +57,7 @@
                         <h4 class="font-bold text-base md:text-2xl">Basic</h4>
                         <div>
                             <label class="text-base font-bold">Location</label>
-                            <input class="block border border-gray-200 rounded p-2 w-96 mt-2" type="text"
+                            <input class="block border focus:outline-red-500 border-gray-200 rounded p-2 w-96 mt-2" type="text"
                                 placeholder="Morocco,casablanca" name="location" value="{{$user->location ? $user->location : null}}" />
                             @error('location')
                                 <p class="text-sm text-red-500">{{ $message }}</p>
@@ -65,7 +65,7 @@
                         </div>
                         <div>
                             <label class="text-base font-bold">Bio</label>
-                            <input class="block border border-gray-200 rounded p-2 w-96 mt-2" type="text"
+                            <input class="block border focus:outline-red-500 border-gray-200 rounded p-2 w-96 mt-2" type="text"
                                 placeholder="A short Bio" name="bio" value="{{$user->bio ? $user->bio : null}}" />
                             @error('bio')
                                 <p class="text-sm text-red-500">{{ $message }}</p>
@@ -84,7 +84,7 @@
                         <h4 class="font-bold text-base md:text-2xl">Set New Password</h4>
                         <div>
                             <label class="text-base font-bold">current Password</label>
-                            <input class="block border border-gray-200 rounded p-2 w-96 mt-2" type="password"
+                            <input class="block border focus:outline-red-500 border-gray-200 rounded p-2 w-96 mt-2" type="password"
                                 name="current_password" />
                             @error('password')
                                 <p class="text-sm text-red-500">{{ $message }}</p>
@@ -92,7 +92,7 @@
                         </div>
                         <div>
                             <label class="text-base font-bold">Passowrd</label>
-                            <input class="block border border-gray-200 rounded p-2 w-96 mt-2" type="password"
+                            <input class="block border focus:outline-red-500 border-gray-200 rounded p-2 w-96 mt-2" type="password"
                                 name="password" />
                             @error('passowrd')
                                 <p class="text-sm text-red-500">{{ $message }}</p>
@@ -100,7 +100,7 @@
                         </div>
                         <div>
                             <label class="text-base font-bold">Confirm new password</label>
-                            <input class="block border border-gray-200 rounded p-2 w-96 mt-2" type="password"
+                            <input class="block border focus:outline-red-500 border-gray-200 rounded p-2 w-96 mt-2" type="password"
                                 name="password_confirmation" />
 
                             @error('password_confirmation')

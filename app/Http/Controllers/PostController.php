@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -49,9 +50,10 @@ class PostController extends Controller
             "title" => "required",
             "description" => "required|min:50",
             "categories" => "required",
-            "content" => "required|100",
+            "content" => "required|min:100",
             "cover" => ["required", "image"]
         ]);
+
         $formFields["categories"] = implode(",", $request->categories);
         if ($request->hasFile("cover")) {
             $file = $request->file("cover");
@@ -60,6 +62,7 @@ class PostController extends Controller
             $formFields["cover"] = $request->file("cover")->store("covers", "public");
         }
         // Retrieve the currently authenticated user...
+        // dd($formFields);
         $user = Auth::user();
         //Retrieve the currently authenticated user's Id
         $id = Auth::id();
@@ -82,10 +85,12 @@ class PostController extends Controller
             "description" => "required",
             "categories" => "required",
             "content" => "required",
-            "cover" => ["required", "image"]
+            "cover" => ["nullable", "image"]
         ]);
         if ($request->hasFile("cover")) {
             $formFields["cover"] = $request->file("cover")->store("covers", "public");
+        } else {
+            $formFields["cover"] = $post->cover;
         }
         $post->update($formFields);
         return redirect("/")->with("message", "The Post updated successfully.");

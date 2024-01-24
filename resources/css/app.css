@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap");
-body {
-    font-family: "Rubik", sans-serif;
+*{
+    font-family:'Roboto Slab', serif;;
 }
+
 nav {
     height: 4.625rem !important;
 }
@@ -17,6 +17,9 @@ nav ul li .subMenu.show {
     z-index: 99999;
     display: flex;
     right: 0;
+}
+p{
+    max-width: 100%;
 }
 main {
     background-color: #eee;
