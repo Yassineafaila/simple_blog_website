@@ -16,10 +16,10 @@ class CommentController extends Controller
         $formFields = $request->validate([
             "comment" => "required",
         ]);
-        $formFields["post_id"]=$post->id;
-        $formFields["user_id"]=Auth::id();
-        
+        $formFields["post_id"] = $post->id;
+        $formFields["user_id"] = Auth::id();
+
         Comment::create($formFields);
-        return redirect()->back()->with("message", "The comment has been created successfully.");
+        return redirect()->back()->with("success", "The comment has been created successfully.");
     }
 }

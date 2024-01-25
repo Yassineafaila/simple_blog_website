@@ -23,7 +23,7 @@ class SaveController extends Controller
         } else {
             // Save the post for the authenticated user
             auth()->user()->saves()->create(['post_id' => $post->id]);
-            return redirect()->back()->with("message", "Post saved successfully");
+            return redirect()->back()->with("success", "saved");
         }
     }
 

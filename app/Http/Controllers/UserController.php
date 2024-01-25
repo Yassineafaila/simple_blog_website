@@ -34,7 +34,7 @@ class UserController extends Controller
         //Login
         auth()->login($user);
 
-        return redirect('/')->with("message", "User created and logged in");
+        return redirect('/')->with("success", "User created and logged in");
     }
     //Show Login Form
     public function login()
@@ -49,7 +49,7 @@ class UserController extends Controller
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect("/")->with("message", "You have been logged out successfully.");
+        return redirect("/")->with("success", "You have been logged out successfully.");
     }
 
     //Log In User
@@ -62,7 +62,7 @@ class UserController extends Controller
         if (auth()->attempt($formFields)) {
             $request->session()->regenerate();
 
-            return redirect('/')->with("message", "You are now logged In successfully");
+            return redirect('/')->with("success", "You are now logged In successfully");
         }
 
         return back()->withErrors(["email" => "Invalid Credentials"]);
@@ -103,22 +103,22 @@ class UserController extends Controller
         }
 
         $user->update($formFields);
-        return redirect()->back()->with('message', 'Regular data updated successfully');
+        return redirect()->back()->with('success', 'updated successfully');
     }
 
     // Update password
     public function updatePassword(Request $request, User $user)
     {
-        $formFields=$request->validate([
-            "current_password"=>["required"],
-            "password"=>["required","min:8"]
+        $formFields = $request->validate([
+            "current_password" => ["required"],
+            "password" => ["required", "min:8"]
         ]);
-       if(Hash::check($request->current_password,$user->password)){
+        if (Hash::check($request->current_password, $user->password)) {
             // Hash Password
             $formFields["password"] = bcrypt($formFields["password"]);
-       }
-       $user->update($formFields);
+        }
+        $user->update($formFields);
 
-        return redirect()->back()->with('message', 'Password updated successfully');
+        return redirect()->back()->with('success', 'Password updated successfully');
     }
 }

@@ -22,6 +22,9 @@ use Illuminate\Support\Facades\Route;
 // Show all the posts
 Route::get("/", [PostController::class, "index"]);
 
+// Show all the categories
+Route::get("/categories", [PostController::class, "getAllCategories"]);
+
 // Show the create page
 Route::get("/posts/create", [PostController::class, "create"])->middleware("auth");
 

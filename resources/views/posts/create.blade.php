@@ -32,26 +32,8 @@
                     <label for="categories" class="inline-block text-lg mb-2">Categories</label>
                     <select id="categories" name="categories[]"
                         class="border focus:outline-red-500 categories border-gray-200 rounded p-2 w-full" multiple>
-                        @php
-                            $categoryOptions = [
-                                'technology' => 'Technology',
-                                'travel' => 'Travel',
-                                'health-wellness' => 'Health & Wellness',
-                                'food-recipes' => 'Food & Recipes',
-                                'lifestyle' => 'Lifestyle',
-                                'social-media' => 'Social Media',
-                                'marketing' => 'Marketing',
-                            ];
-
-                        @endphp
-                        @foreach ($categoryOptions as $key => $category)
-                            <option value="{{ $key }}"
-                                {{ in_array($key, old('categories', [])) ? 'selected' : '' }}>
-                                {{ $category }}
-                            </option>
-                        @endforeach
                     </select>
-                    </select>
+                    <input type="hidden" name="category_texts" id="category_texts" value="">
                     @error('categories')
                         <p class="text-red-200 text-xs mt-1">{{ $message }}</p>
                     @enderror
@@ -118,23 +100,46 @@
             .catch(error => {
                 console.log(error);
             });
-
-
     </script>
     <script type="text/javascript">
-         $(document).ready(function() {
-            $(".categories").select2({
-                placeholder: "select",
-                allowClear: true,
+        $(document).ready(function() {
+            $("#categories").select2({
+                ajax: {
+                    url: '/categories',
+                    dataType: 'json',
+                    data: function(params) {
+                        console.log(params)
+                        return {
+                            q: $.trim(params.term)
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: $.map(data, function(category) {
+                                return {
+                                    id: category.id,
+                                    text: category.text
+                                };
+                            })
+                        };
+                    },
+                    cache: true
+                }
             })
-            $("#categories").on("click",function(){
-                console.log("hi")
-            })
-            $("#categories").select2()
-
+            $("#categories").on("select2:select select2:unselect", function(e) {
+                var selectedCategories = $(this).select2('data');
+                var categoryTexts = selectedCategories.map(function(category) {
+                    return category.text;
+                }).join(',');
+                $("#category_texts").val(categoryTexts);
+            });
         })
     </script>
     <script>
-        $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+        $.ajaxSetup({
+            headers: {
+                'csrftoken': '{{ csrf_token() }}'
+            }
+        });
     </script>
 @endsection

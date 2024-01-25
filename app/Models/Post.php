@@ -36,4 +36,5 @@ class Post extends Model
     {
         return $this->hasMany(Save::class,"post_id");
     }
+
 }

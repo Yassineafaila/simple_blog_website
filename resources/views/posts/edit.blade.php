@@ -5,7 +5,7 @@
             <h2 class="text-2xl font-bold uppercase mb-1">Edit a Post</h2>
             <p class="mb-4 text-gray-400">Edit : <span class="text-red-500 font-bold ">{{ $post->title }}</span></p>
         </header>
-        <form action="/posts/{{ $post->id }}" method="POST" enctype="multipart/form-data">
+        <form action="/posts/{{ $post->id }}" method="POST" enctype="multipart/form-data" class="mt-11">
             @csrf
             @method('put')
             <div class="flex flex-wrap w-full justify-between">
@@ -32,15 +32,10 @@
                     <label for="categories" class="inline-block text-lg mb-2">
                         Categories
                     </label>
-                    <select name="categories" class="border focus:outline-red-500 border-gray-200 rounded p-2 w-full">
-                        <option value="technology">Technology</option>
-                        <option value="travel">Travel</option>
-                        <option value="health-wellness">Health & Wellness</option>
-                        <option value="food-recipes">Food & Recipes</option>
-                        <option value="lifestyle">Lifestyle</option>
-                        <option value="Social Media">Social Media</option>
-                        <option value="Marketing">Marketing</option>
+                    <select id="categories" name="categories[]"
+                        class="border focus:outline-red-500 categories border-gray-200 rounded p-2 w-full" multiple>
                     </select>
+                    <input type="hidden" name="category_texts" id="category_texts" value="">
                     @error('categories')
                         <p class="text-red-200 text-xs mt-1">{{ $message }}</p>
                     @enderror
@@ -109,5 +104,42 @@
             .catch(error => {
                 console.log(error);
             });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#categories").select2({
+                ajax: {
+                    url: '/categories',
+                    dataType: 'json',
+                    data: function(params) {
+                        console.log(params)
+                        return {
+                            q: $.trim(params.term)
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
+                }
+            })
+
+        })
+        $("#categories").on("select2:select select2:unselect", function(e) {
+            var selectedCategories = $(this).select2('data');
+            var categoryTexts = selectedCategories.map(function(category) {
+                return category.text;
+            }).join(',');
+            $("#category_texts").val(categoryTexts);
+        });
+    </script>
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'csrftoken': '{{ csrf_token() }}'
+            }
+        });
     </script>
 @endsection

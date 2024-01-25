@@ -15,14 +15,15 @@ class ReplyController extends Controller
     //Store The Reply
     public function store(Request $request, Post $post, Comment $comment)
     {
-        $formFields = $request->validate([
-            "reply" => "required"
+        $validatedData = $request->validate(["reply" => "required"]);
+
+        Reply::create([
+            "user_id" => Auth::id(),
+            "post_id" => $post->id,
+            "comment_id" => $comment->id,
+            "content" => $validatedData['reply'],
         ]);
-        $formFields["user_id"] = Auth::id();
-        $formFields["post_id"] = $post->id;
-        $formFields["comment_Id"] = $comment->id;
-        $formFields["content"] = $request->reply;
-        Reply::create($formFields);
-        return  redirect()->back()->with("message", "The reply has been created successfully.");
+
+        return redirect()->back()->with("success", "Reply added successfully.");
     }
 }

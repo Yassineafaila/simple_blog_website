@@ -49,12 +49,11 @@ class PostController extends Controller
         $formFields = $request->validate([
             "title" => "required",
             "description" => "required|min:50",
-            "categories" => "required",
+            "category_texts" => "required",
             "content" => "required|min:100",
             "cover" => ["required", "image"]
         ]);
-
-        $formFields["categories"] = implode(",", $request->categories);
+        $formFields["categories"] = $request->category_texts;
         if ($request->hasFile("cover")) {
             $file = $request->file("cover");
             $name = $file->hashName(); // generate a unique or random name
@@ -68,7 +67,7 @@ class PostController extends Controller
         $id = Auth::id();
         $formFields["user_id"] = $id;
         Post::create($formFields);
-        return redirect("/")->with("message", "The Post has been created successfully.");
+        return redirect("/")->with("success", "The Post has been created successfully.");
     }
 
     //Show Edit Page Post
@@ -83,17 +82,18 @@ class PostController extends Controller
         $formFields = $request->validate([
             "title" => "required",
             "description" => "required",
-            "categories" => "required",
+            "category_texts" => "required",
             "content" => "required",
             "cover" => ["nullable", "image"]
         ]);
+        $formFields["categories"] = $request->category_texts;
         if ($request->hasFile("cover")) {
             $formFields["cover"] = $request->file("cover")->store("covers", "public");
         } else {
             $formFields["cover"] = $post->cover;
         }
         $post->update($formFields);
-        return redirect("/")->with("message", "The Post updated successfully.");
+        return redirect("/")->with("success", "The Post updated successfully.");
     }
 
     // Delete Post
@@ -103,7 +103,34 @@ class PostController extends Controller
         if ($currentUser === $post->user_id) {
             Storage::disk('public')->delete("{{$post->cover}}");
             $post->delete();
-            return redirect('/')->with("message", "The Post deleted successfully. ");
+            return redirect('/')->with("success", "The Post deleted successfully. ");
+        }
+    }
+
+    //Get All The Categories:
+    public function getAllCategories(Request $request)
+    {
+        try {
+            $result = [];
+            $term = trim($request->q);
+
+            if (empty($term)) {
+                return response([]);
+            }
+
+            $categories = Category::search($term)->limit(5)->get();
+
+            foreach ($categories as $category) {
+                $result[] = ['id' => $category->id, 'text' => $category->name];
+            }
+
+            return response()->json($result);
+        } catch (\Exception $e) {
+            // Log the exception
+            error_log($e);
+
+            // Return a generic error response
+            return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
 }

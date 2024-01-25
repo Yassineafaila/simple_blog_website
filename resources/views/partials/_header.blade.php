@@ -2,7 +2,7 @@
     <div class="flex items-center">
         <a href="/"
             class="font-bold text-base sm:text-2xl bg-buttonBg py-1.5 px-2.5 rounded-md text-white">PureInsight</a>
-        <form action="/" class="hidden md:flex md:w-96 ">
+        <form action="/" class="hidden md:flex md:w-96 mb-0 ">
             <div class="relative border-2 border-gray-100 m-4 rounded-lg flex items-center">
 
                 <input type="text" name="search" class="h-10 w-full py-1.5 px-2 focus:outline-none "

@@ -21,14 +21,14 @@ class LikeController extends Controller
         if ($userAlreadyLikedThisComment) {
             // unlike this comment
             $userAlreadyLikedThisComment->delete();
-            return redirect()->back()->with("message", "");
+            return redirect()->back()->with("success", "");
         }
 
         $data["user_id"] = Auth::id();
         $data["comment_Id"] = $comment->id;
         Like::create($data);
 
-        return redirect()->back()->with("message", "liked");
+        return redirect()->back()->with("success", "liked");
     }
     }
 
